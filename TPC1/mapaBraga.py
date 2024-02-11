@@ -80,7 +80,7 @@ for file in os.listdir(diretoria_xml):
         
         htmlfile.close()
 
-sorted_listaruas = sorted(listaruas.lower() for listaruas in listaruas)
+sorted_listaruas = sorted(listaruas)
 
 for rua in sorted_listaruas:
     html += f'<li><a href="html/{rua}.html">{rua}</a></li>'
