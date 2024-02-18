@@ -25,7 +25,7 @@ for file in os.listdir(diretoria_xml):
         root = tree.getroot()
         rua = root.find('.//nome').text.strip()
         id = root.find('.//número').text
-        listaruas.append(rua)
+        listaruas.append((rua,id))
         htmlfile = open(f"html/{rua}.html", "w", encoding="utf-8")
         htmlfile.write(f"<h1>{rua}</h1>")
 
@@ -80,10 +80,12 @@ for file in os.listdir(diretoria_xml):
         
         htmlfile.close()
 
-sorted_listaruas = sorted(listaruas)
+sorted_listaruas = sorted(listaruas, key=lambda x: int(x[1]))
 
-for rua in sorted_listaruas:
-    html += f'<li><a href="html/{rua}.html">{rua}</a></li>'
+for rua_tuple in sorted_listaruas:
+    rua_name = rua_tuple[0]
+    html += f'<li><a href="html/{rua_name}.html">{rua_name}</a></li>'
+
 
 html += "</ul>"
 html += "</body>"
