@@ -13,6 +13,7 @@ http.createServer((req, res) => {
         // Display options
         res.writeHead(200, {'Content-Type' : 'text/html; charset=utf8'});
         res.write("<h1>Escolha uma opção</h1>");
+        res.write("<link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>");
         res.write("<ul>");
         res.write("<li><a href='/filmes'>Ver Filmes</a></li>");
         res.write("<li><a href='/atores'>Ver Atores</a></li>");
@@ -26,6 +27,7 @@ http.createServer((req, res) => {
                 res.writeHead(200, {'Content-Type' : 'text/html; charset=utf8'});
                 let lista = resp.data;
                 res.write("<h1>Lista de filmes</h1>");
+                res.write("<link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>");
                 res.write("<ul>");
                 for(let i in lista){
                     res.write(`<li><a href="/filmes/${lista[i].id}">${lista[i].title}</a></li>`);
@@ -48,6 +50,7 @@ http.createServer((req, res) => {
             <html>
             <head>
                 <title>Informações do Filme</title>
+                <link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>
             </head>
             <body>
                 <h1>${filme.title}</h1>
@@ -74,6 +77,7 @@ http.createServer((req, res) => {
                 res.writeHead(200, {'Content-Type' : 'text/html; charset=utf8'});
                 let lista = resp.data;
                 res.write("<h1>Lista de atores</h1>");
+                res.write("<link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>");
                 res.write("<ul>");
                 for(let i in lista){
                     res.write(`<li><a href="/atores/${lista[i].id}">${lista[i].Nome}</a></li>`);
@@ -95,6 +99,7 @@ http.createServer((req, res) => {
                     <html>
                     <head>
                         <title>Informações do ator</title>
+                        <link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>
                     </head>
                     <body>
                         <h1>${actor.Nome}</h1>
@@ -119,6 +124,7 @@ http.createServer((req, res) => {
                 res.writeHead(200, {'Content-Type' : 'text/html; charset=utf8'});
                 let lista = resp.data;
                 res.write("<h1>Lista de géneros</h1>");
+                res.write("<link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>");
                 res.write("<ul>");
                 for(let i in lista){
                     res.write(`<li><a href="/generos/${lista[i].id}">${lista[i].designacao}</a></li>`);
@@ -140,6 +146,7 @@ http.createServer((req, res) => {
                     <html>
                     <head>
                         <title>Informações do género</title>
+                        <link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>
                     </head>
                     <body>
                         <h1>${genre.designacao}</h1>
