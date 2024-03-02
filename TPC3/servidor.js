@@ -157,11 +157,16 @@ http.createServer((req, res) => {
             }).catch(erro => { 
                 console.log("Erro: " + erro); 
             }); 
-    } else if(q.pathname == "/w3.css"){
+    } else if (q.pathname == "/w3.css") {
         fs.readFile('w3.css', (erro, dados) => {
-            res.writeHead(200, {'Content-Type' : 'text/css;'})
-            res.write(dados)
-            res.end()
+            if (erro) {
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end("Erro ao ler o arquivo CSS");
+                return;
+            }
+            res.writeHead(200, {'Content-Type': 'text/css'});
+            res.write(dados);
+            res.end();
         })
     } else {
         // If the path is not found
