@@ -123,7 +123,7 @@ http.createServer((req, res) => {
             .then(resp => {
                 res.writeHead(200, {'Content-Type' : 'text/html; charset=utf8'});
                 let lista = resp.data;
-                res.write("<h1>Lista de géneros</h1>");
+                res.write("<h1>Lista de gêneros</h1>");
                 res.write("<link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>");
                 res.write("<ul>");
                 for(let i in lista){
@@ -145,7 +145,7 @@ http.createServer((req, res) => {
                     const htmlContent = `
                     <html>
                     <head>
-                        <title>Informações do género</title>
+                        <title>Informações do gênero</title>
                         <link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>
                     </head>
                     <body>
