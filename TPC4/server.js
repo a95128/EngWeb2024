@@ -25,7 +25,7 @@ function collectRequestBodyData(request, callback) {
     }
 }
 
-// Server creation
+// Server creationcompositores
 
 var compositoresServer = http.createServer((req, res) => {
     // Logger: what was requested and when it was requested
@@ -35,26 +35,27 @@ var compositoresServer = http.createServer((req, res) => {
     // Handling request
     if(static.staticResource(req)){
         static.serveStaticResource(req, res)
-    }
-    else{
+    
+    } else{
         switch(req.method){
             case "GET": 
-                // GET /compositores --------------------------------------------------------------------
-                if ((req.url == '/') || (req.url == '/compositores'))  {
-                    axios.get('http://localhost:3000/compositores?_sort=nome')
-                    .then(resp => {
-                        var compositores = resp.data
-                        res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"})
-                        res.write(templates.compositoreslistPage(compositores, d))
-                        res.end()
-                    })
-                    .catch(erro => {
-                        res.writeHead(501, {"Content-Type" : "text/html; charset=utf8"})
-                        res.write("<p>Não foi possível obter a lista de compositores" + req.method + "</p>")
-                        res.write("<p>" + erro + "</p>")
-                        res.end()
-                    })
-                }
+            // GET /compositores --------------------------------------------------------------------
+            if ((req.url == '/') || (req.url == '/compositores'))  {
+                axios.get('http://localhost:3000/compositores?_sort=nome')
+                .then(resp => {
+                    var compositores = resp.data
+                    res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"})
+                    res.write(templates.compositoreslistPage(compositores, d))
+                    res.end() // Aqui está o único res.end() após escrever toda a resposta
+                })
+                .catch(erro => {
+                    res.writeHead(501, {"Content-Type" : "text/html; charset=utf8"})
+                    res.write("<p>Não foi possível obter a lista de compositores" + req.method + "</p>")
+                    res.write("<p>" + erro + "</p>")
+                    res.end() // Aqui está o único res.end() em caso de erro
+                })
+            }
+        
 
                 // GET /compositores/:id --------------------------------------------------------------------
                
@@ -138,7 +139,44 @@ var compositoresServer = http.createServer((req, res) => {
                         });
                 }
 
-                // GET ? -> Lancar um erro
+                // GET /periodos --------------------------------------------------------------------
+                else if ((req.url == '/periodos'))  {
+                    axios.get(`http://localhost:3000/periodos?_sort=id`)
+                    .then(resp => {
+                        var periodos = resp.data
+                        res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"})
+                        res.write(templates.periodosListPage(periodos, d))
+                        res.end()
+                    })
+                    .catch(erro => {
+                        res.writeHead(501, {"Content-Type" : "text/html; charset=utf8"})
+                        res.write("<p>Não foi possível obter a lista de periodos" + req.method + "</p>")
+                        res.write("<p>" + erro + "</p>")
+                        res.end()
+                    })
+                }
+
+             
+                  //GET /periodos/:id---------------------------------
+                
+                 else if (/\/periodos\/(P)[0-9]+$/i.test(req.url)) {
+                      var id = req.url.split('/').pop();
+                
+                      axios.get("http://localhost:3000/periodos/" + id)
+                          .then(resp => {
+                              var periodo = resp.data; 
+                              res.writeHead(200, { "Content-Type": "text/html; charset=utf8" });
+                              res.write(templates.periodosPage(periodo, d)); 
+                              res.end();
+                          })
+                          .catch(error => {
+                              res.writeHead(500, { "Content-Type": "text/html; charset=utf8" });
+                              res.write("<p>Não foi possível obter o periodo</p>");
+                              res.end("<p>" + error + "</p>");
+                          });
+                  }
+
+              // GET ? -> Lancar um erro
                 else {
                     res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"});
                     res.write("<p>Método GET não suportado: " + req.method + "</p>");
