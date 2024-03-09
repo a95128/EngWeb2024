@@ -176,6 +176,50 @@ var compositoresServer = http.createServer((req, res) => {
                           });
                   }
 
+                  // GET /periodos/registo --------------------------------------------------------------------
+                else if (req.url == '/periodos/registo') {
+                    res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"});
+                    res.write(templates.periodoFormPage(d));
+                    res.end();
+                }
+
+                // GET /periodos/edit/:id --------------------------------------------------------------------
+                else if (/\/periodos\/edit\/(P)[0-9]+$/i.test(req.url)) {
+                    var id = req.url.split('/').pop();
+                
+                    axios.get("http://localhost:3000/periodos/" + id)
+                        .then(resp => {
+                            var periodo = resp.data; 
+                
+                            res.writeHead(200, { "Content-Type": "text/html; charset=utf8" });
+                            res.write(templates.periodoFormPage(periodo, d));
+                            res.end();
+                        })
+                        .catch(error => {
+                            res.writeHead(500, { "Content-Type": "text/html; charset=utf8" });
+                            res.write("<p>Não foi possível obter o periodo para edição</p>");
+                            res.end("<p>" + error + "</p>");
+                        });
+                }                              
+
+                // GET /periodos/delete/:id --------------------------------------------------------------------
+                else if (/\/periodos\/delete\/(P)[0-9]+$/i.test(req.url)) {
+                    // Extracting the ID from req.url
+                    var id = req.url.split('/').pop();
+
+                    axios.delete("http://localhost:3000/periodos/" + id)
+                        .then(resp => {
+                            res.writeHead(200, { "Content-Type": "text/html; charset=utf8" });
+                            res.write("<p>periodo excluído com sucesso</p>");
+                            res.end();
+                        })
+                        .catch(error => {
+                            res.writeHead(500, { "Content-Type": "text/html; charset=utf8" });
+                            res.write("<p>Não foi possível excluir o periodo</p>");
+                            res.end("<p>" + error + "</p>");
+                        });
+                }
+
               // GET ? -> Lancar um erro
                 else {
                     res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"});
@@ -332,6 +376,97 @@ var compositoresServer = http.createServer((req, res) => {
                     
                 }
 
+                                // POST /periodos --------------------------------------------------------------------
+                else if ((req.url == '/') || (req.url == '/periodos')) {
+                    collectRequestBodyData(req, result => {
+                        if (result) {
+                            axios.post("http://localhost:3000/periodos", result)
+                            .then(resp => {
+                                console.log(resp.data);
+                                res.writeHead(201, {"Content-Type" : "text/html; charset=utf8"});
+                                res.end("Período criado com sucesso: " + JSON.stringify(resp.data) + "</p>");
+                            })
+                            .catch(erro => {
+                                res.writeHead(503, {"Content-Type" : "text/html; charset=utf8"});
+                                res.write("<p>Não foi possível criar o período</p>");
+                                res.end("<p>" + erro + "</p>");
+                            });
+                        } else {
+                            res.writeHead(502, {"Content-Type" : "text/html; charset=utf8"});
+                            res.write("<p>Não foi possível obter os dados do corpo da solicitação</p>");
+                            res.end();
+                        }
+                    });
+                }
+
+                // POST /periodos/edit/:id --------------------------------------------------------------------
+                else if (/\/periodos\/edit\/(P)[0-9]+$/i.test(req.url)) {
+                    var id = req.url.split('/').pop();
+                
+                    collectRequestBodyData(req, result => {
+                        if (result) {
+                            axios.put("http://localhost:3000/periodos/" + id, result)
+                            .then(resp => {
+                                console.log(resp.data)
+                                res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"})
+                                res.end("Registro atualizado: " + JSON.stringify(resp.data) + "</p>")
+                            })
+                            .catch(erro => {
+                                res.writeHead(507, {"Content-Type" : "text/html; charset=utf8"})
+                                res.write("<p>Não foi possível atualizar o registro</p>")
+                                res.end("<p>" + erro + "</p>")
+                                res.end()
+                            })
+                        } else {
+                            res.writeHead(506, {"Content-Type" : "text/html; charset=utf8"})
+                            res.write("<p>Não foi possível obter os dados do body" + req.method + "</p>")
+                            res.end()
+                        }
+                    });
+                }
+
+                // POST /periodos/delete/:id --------------------------------------------------------------------
+                else if (/\/periodos\/delete\/(P)[0-9]+$/i.test(req.url)) {
+                    // Extrair o ID do URL da requisição
+                    var id = req.url.split('/').pop();
+                
+                    axios.delete("http://localhost:3000/periodos/" + id)
+                    .then(resp => {
+                        res.writeHead(200, { "Content-Type": "text/html; charset=utf8" });
+                        res.write("<p>Período excluído com sucesso</p>");
+                        res.end();
+                    })
+                    .catch(error => {
+                        res.writeHead(500, { "Content-Type": "text/html; charset=utf8" });
+                        res.write("<p>Não foi possível excluir o período</p>");
+                        res.end("<p>" + error + "</p>");
+                    });
+                }
+
+                // POST /periodos/:id --------------------------------------------------------------------
+                else if (/\/periodos\/(P)[0-9]+$/i.test(req.url)) {
+                    var id = req.url.split('/').pop();
+                
+                    collectRequestBodyData(req, result => {
+                        if (result) {
+                            axios.put("http://localhost:3000/periodos/" + id, result)
+                            .then(resp => {
+                                console.log(resp.data);
+                                res.writeHead(200, {"Content-Type" : "text/html; charset=utf8"});
+                                res.end("Período atualizado com sucesso: " + JSON.stringify(resp.data) + "</p>");
+                            })
+                            .catch(erro => {
+                                res.writeHead(507, {"Content-Type" : "text/html; charset=utf8"});
+                                res.write("<p>Não foi possível atualizar o período</p>");
+                                res.end("<p>" + erro + "</p>");
+                            });
+                        } else {
+                            res.writeHead(502, {"Content-Type" : "text/html; charset=utf8"});
+                            res.write("<p>Não foi possível obter os dados do corpo da solicitação</p>");
+                            res.end();
+                        }
+                    });
+                }
 
                 // POST ? -> Lancar um erro
                 else {
