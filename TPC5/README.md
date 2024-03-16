@@ -1,0 +1,20 @@
+# TPC5
+
+Enunciado do quinto TPC da UC de Engenharia Web
+
+## Enunciado 
+
+**Objetivo:** Criar uma aplicação para a gestão de uma base de dados de compositores musicais:  Montar a API de dados com o json-server a partir do dataset de compositores em anexo, criar uma aplicação Web com as seguintes caraterísticas: CRUD sob compositores e periodos musicais. Investigar e inserir pelo menos 5 compositores do período moderno ou serialista.
+**Material** Dataset fornecido na blackboard
+**Tópicos:**  
+
+Numa primeira fase foi necessário restruturar o dataset em formato json, uma vez que seria mais prático criar um dicionário dedicado apenas aos periodos existentes, do que percorrer o ficheiro todo para identificar cada um deles. 
+Desta forma foi criado o ficheiro tonewjson.py, que é o script responsável por essa nova estrutura armazenada em novocompositores.json. O ficheiro modificadataset.py reutiliza toda a informação fornecida nesse dataset combinada com a criação de identificadores únicos para os periodos.
+
+Para a criação das páginas HTML, o ficheiro server.js é um servidor HTTP escrito em Node.js. Ele usa o módulo http para criar um servidor que responde a requisições HTTP. Quando uma requisição é feita, o servidor verifica o caminho (pathname) da URL requisitada e responde de acordo com a lógica implementada para cada rota.
+
+Ele também usa os módulos fs para ler arquivos e axios para fazer requisições HTTP a outros serviços. O servidor serve páginas HTML dinamicamente com base nas requisições do cliente, como listar compositores, ou exibir informações detalhadas sobre eles.
+
+Além disso, a utilização de links referentes ao w3 são meramente por uma questão estética.
+
+O servidor está configurado para escutar na porta 3040 e imprime uma mensagem no console para indicar que está em execução.
