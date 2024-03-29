@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doc>
+    <meta>
+        <title>TPC1: Exemplo</title>
+        <date>2024-02-05</date>
+        <author>
+            <id>A95128</id>
+            <nome>Ana João Alves</nome>
+        </author>
+        <uc>
+            <sigla>EW2024</sigla>
+            <nome>Engenharia Web</nome>
+        </uc>
+    </meta>
+    <resumo>
+        <p>Itera sobre os arquivos no diretório especificado (diretoria_xml), filtrando apenas os arquivos com extensão .xml.</p>
+        <p>Para cada arquivo XML encontrado, o código realiza várias ações:</p>
+        <p>Lê o nome e o número da rua do arquivo XML.</p>
+        <p>Cria um arquivo HTML correspondente ao nome da rua.</p>
+        <p>Adiciona imagens da rua desenhada e atual ao arquivo HTML.</p>
+        <p>Adiciona descrições da rua ao arquivo HTML.</p>
+        <p>Adiciona uma lista de casas ao arquivo HTML.</p>
+        <p>Adiciona um link de volta para a página principal ao arquivo HTML.</p>
+        <p>Ordena a lista de ruas (listaruas) com base no ID convertido para inteiro.</p>
+        <p>Para cada rua na lista ordenada, o código cria um link HTML na forma de uma lista ordenada. </p>
+        <p>O código fecha as tags HTML necessárias para concluir o arquivo HTML principal.</p>
+        <p>Ele escreve o conteúdo HTML gerado em um arquivo HTML principal chamado "maparuas.html". </p>
+    </resumo>
+
+    <resultados>
+        <resultado> Resultado: Conseguimos visualizar uma primeira página com todas as nossas cidades ordenadas. Ao clicar numa delas somos reencaminhados para uma nova página 
+        onde visualizamos todos os detalhes, desde o nome da rua, as imagens associadas, a descrição e as casas. </resultado>
+        
+    </resultados>
+
+</doc>
