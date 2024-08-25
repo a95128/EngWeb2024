@@ -1,0 +1,28 @@
+1. Dataset na pasta
+
+#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#
+
+2. Correr no terminal da pasta:
+    $ sudo docker pull mongo
+    $ sudo docker run -d -p 27017:27017 --name [NomeADefinir] mongo
+    $ sudo docker cp plantas.json [NomeADefinir]:/tmp
+    $ sudo docker exec -it [NomeADefinir] bash
+    $ ls /tmp
+
+    $ mongoimport -d [NomeDaBD] -c [NomeDaCollection] /tmp/plantas.json
+    ou caso o json não esteja no formato que ele aceita
+    $ mongoimport -d [NomeDaBD] -c [NomeDaCollection] --jsonArray /tmp/plantas.json
+    ou antes de isso correr o script, que põe no formato que ele quer
+
+    $ mongosh
+
+#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#
+
+3. Para testar e ver se está bem implementado:
+    Conectar-me à base de dados
+    $ use [NomeDaBD]
+
+    Consultar os documentos na coleção plantas
+    $db.[NomeDaCollection].find()
+
+
